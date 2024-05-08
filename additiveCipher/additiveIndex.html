@@ -12,16 +12,17 @@
     <link rel="stylesheet" href="additiveStyles.css" />
   </head>
   <body>
+ 
+
+    <div class="cipher-section">
+      <h1 class="text-center ciphertitile ">Additive Cipher </h1>
+    </div>
+
     <div class="container">
       <h1 class="text-center mb-4">Alphabet Index</h1>
       <div class="table-responsive">
         <table class="table">
-          <thead>
-            <tr>
-              <th>Alphabet</th>
-              <th>Index</th>
-            </tr>
-          </thead>
+         
           <tbody>
             <!-- Generate alphabet items dynamically -->
           </tbody>
@@ -29,72 +30,145 @@
       </div>
 
       <div class="cipher-section">
-        <h2 class="text-center">Additive Cipher</h2>
+        <h2 class="text-center">Additive Cipher Formula</h2>
         <div class="cipher-rules">
-          <p><strong>Encryption:</strong> Plaintext + Key mod 26</p>
-          <p><strong>Decryption:</strong> Ciphertext - Key mod 26</p>
+          <p><strong>Encryption:</strong> (Plaintext + Key) mod 26</p>
+          <p><strong>Decryption:</strong> (Ciphertext - Key) mod 26</p>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <h3 class="text-center">Encryption</h3>
-            <div class="form-group">
-              <label for="encryptionInput">Plaintext</label>
-              <input
-                type="text"
-                class="form-control"
-                id="encryptionInput"
-                placeholder="Enter plaintext"
-              />
+        <div class="cipher-section">
+          <h2 class="text-center">Additive Cipher Encryption</h2>
+          <div class="cipher-rules">
+            <p><strong>Encryption:</strong> (Plaintext + Key) mod 26</p>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="text-center">Encryption</h3>
+              <div class="form-group">
+                <label for="encryptionInput">Plaintext</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="encryptionInput"
+                  placeholder="Enter plaintext"
+                />
+              </div>
+              <div class="form-group">
+                <label for="encryptionKey">Key</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="encryptionKey"
+                  placeholder="Enter key"
+                />
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary btn-block"
+                onclick="encrypt()"
+              >
+                Encrypt
+              </button>
+              <div class="form-group mt-3">
+                <label for="encryptedText">Encrypted Text</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="encryptedText"
+                  placeholder="Encrypted text"
+                  readonly
+                />
+              </div>
             </div>
-            <div class="form-group">
-              <label for="encryptionKey">Key</label>
-              <input
-                type="number"
-                class="form-control"
-                id="encryptionKey"
-                placeholder="Enter key"
-              />
-            </div>
-            <button
-              type="button"
-              class="btn btn-primary btn-block"
-              onclick="encrypt()"
-            >
-              Encrypt
-            </button>
-            <div class="form-group mt-3">
-              <label for="encryptedText">Encrypted Text</label>
-              <input
-                type="text"
-                class="form-control"
-                id="encryptedText"
-                placeholder="Encrypted text"
-                readonly
-              />
+            <div class="col-md-6">
+              <div class="steps-table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Plaintext</th>
+                      <th>Plaintext Alphabet Values</th>
+                      <th>Key Adding All Values</th>
+                      <th>Mod 26 Values</th>
+                      <th>Ciphertext</th>
+                    </tr>
+                  </thead>
+                  <tbody id="encryptionTableBody">
+                    <!-- Encryption steps table body -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="steps-table">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Plaintext</th>
-                    <th>Plaintext Alphabet Values</th>
-                    <th>Key Adding All Values</th>
-                    <th>Mod 26 Values</th>
-                    <th>Ciphertext</th>
-                  </tr>
-                </thead>
-                <tbody id="encryptionTableBody">
-                  <!-- Encryption steps table body -->
-                </tbody>
-              </table>
+        </div>
+        <hr />
+
+        <div class="cipher-section">
+          <h2 class="text-center">Additive Cipher Decryption</h2>
+          <div class="cipher-rules">
+            <p><strong>Decryption:</strong> (Ciphertext - Key) mod 26</p>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="text-center">Decryption</h3>
+              <div class="form-group">
+                <label for="decryptionInput">Ciphertext</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="decryptionInput"
+                  placeholder="Enter ciphertext"
+                />
+              </div>
+              <div class="form-group">
+                <label for="decryptionKey">Key</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="decryptionKey"
+                  placeholder="Enter key"
+                />
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary btn-block"
+                onclick="decrypt()"
+              >
+                Decrypt
+              </button>
+              <div class="form-group mt-3">
+                <label for="decryptedText">Decrypted Text</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="decryptedText"
+                  placeholder="Decrypted text"
+                  readonly
+                />
+              </div>
+             
+            </div>
+            <div class="col-md-6">
+              <div class="steps-table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Ciphertext</th>
+                      <th>Ciphertext Alphabet Values</th>
+                      <th>Key Subtracting All Values</th>
+                      <th>Mod 26 Values</th>
+                      <th>Plaintext</th>
+                    </tr>
+                  </thead>
+                  <tbody id="decryptionTableBody">
+                    <!-- Decryption steps table body -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
+  
+</div>
     <script src="additiveScript.js"></script>
   </body>
 </html>

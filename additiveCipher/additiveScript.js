@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
   // Function to generate alphabet items
   function generateAlphabet() {
@@ -131,4 +132,101 @@ function displaySteps(steps) {
     let encryptedCell = row.insertCell();
     encryptedCell.textContent = steps[i][4];
   }
+}
+
+
+function decrypt() {
+    let ciphertext = document
+      .getElementById("decryptionInput")
+      .value.toUpperCase();
+    let key = parseInt(document.getElementById("decryptionKey").value);
+    let steps = [];
+    let plaintext = "";
+
+    // Add the "All Alphabet Values" as the second column header
+    let alphabetValuesRow = [];
+    for (let i = 0; i < 26; i++) {
+      alphabetValuesRow.push(i);
+    }
+    steps.push(alphabetValuesRow);
+
+    // Add the alphabet index values
+    let alphabetIndexRow = [];
+    for (let i = 0; i < 26; i++) {
+      alphabetIndexRow.push(i);
+    }
+    steps.push(alphabetIndexRow);
+
+    for (let i = 0; i < ciphertext.length; i++) {
+      let char = ciphertext[i];
+      if (char === " ") {
+        // If character is a space, add it directly to the plaintext
+        plaintext += " ";
+        // Push an empty array for the space step
+        steps.push([]);
+        continue; // Skip the rest of the iteration for this character
+      }
+      let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+
+      if (charCode >= 0 && charCode <= 25) {
+        // Step 1: Subtract key value from the character value
+        let step1 = `Subtract key (${key}) from ciphertext value (${char})`;
+        steps.push([step1]);
+
+        let ciphertextValue = charCode;
+        let step2 = `Ciphertext value: ${ciphertextValue}`;
+        steps[i + 2].push(step2);
+
+        let keySubtractingValue = (charCode - key + 26) % 26; // Adding 26 to handle negative numbers
+        let step3 = `Ciphertext value (${ciphertextValue}) - Key (${key}) = ${keySubtractingValue}`;
+        steps[i + 2].push(step3);
+
+        // Step 2: Convert back to letter
+        let decryptedCharCode = keySubtractingValue + 65;
+        let decryptedChar = String.fromCharCode(decryptedCharCode);
+        let step4 = `Decrypted character: ${decryptedChar}`;
+        steps[i + 2].push(step4);
+
+        plaintext += decryptedChar;
+      } else {
+        // Not a valid letter, keep as is
+        plaintext += char;
+      }
+    }
+
+    // Display steps in the table
+    displayDecryptionSteps(steps);
+
+    // Display plaintext
+    document.getElementById("decryptedText").value = plaintext;
+}
+
+function displayDecryptionSteps(steps) {
+    let tableBody = document.getElementById("decryptionTableBody");
+    tableBody.innerHTML = "";
+
+    // Start iterating from the second row (excluding the index row)
+    for (let i = 2; i < steps.length; i++) {
+      let row = tableBody.insertRow();
+
+      // Insert ciphertext value
+      let ciphertextCell = row.insertCell();
+      ciphertextCell.textContent = steps[i][0];
+
+      // Insert ciphertext value
+      let ciphertextCellCharValue = row.insertCell();
+      ciphertextCellCharValue.textContent = steps[i][1];
+
+      // Insert key subtracting value
+      let keySubtractingCell = row.insertCell();
+      keySubtractingCell.textContent = steps[i][2];
+
+      // Insert modulo 26 value
+      let mod26Cell = row.insertCell();
+      mod26Cell.textContent = steps[i][3];
+
+      // Insert decrypted character
+      let decryptedCell = row.insertCell();
+      decryptedCell.textContent = steps[i][4];
+    }
 }
