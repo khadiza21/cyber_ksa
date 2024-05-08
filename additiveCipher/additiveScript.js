@@ -177,15 +177,22 @@ function decrypt() {
         let step2 = `Ciphertext value: ${ciphertextValue}`;
         steps[i + 2].push(step2);
 
-        let keySubtractingValue = (charCode - key + 26) % 26; // Adding 26 to handle negative numbers
-        let step3 = `Ciphertext value (${ciphertextValue}) - Key (${key}) = ${keySubtractingValue}`;
+        
+        let ciphertextValuesub = charCode-key;
+        let step3 = `key substructing value: ${ciphertextValue} -  Key (${key}) = ${ciphertextValuesub}`;
         steps[i + 2].push(step3);
+
+
+
+        let keySubtractingValue = (charCode - key + 26) % 26; // Adding 26 to handle negative numbers
+        let step4 = `Ciphertext substruct value (${ciphertextValuesub}) mod 26  = ${keySubtractingValue}`;
+        steps[i + 2].push(step4);
 
         // Step 2: Convert back to letter
         let decryptedCharCode = keySubtractingValue + 65;
         let decryptedChar = String.fromCharCode(decryptedCharCode);
-        let step4 = `Decrypted character: ${decryptedChar}`;
-        steps[i + 2].push(step4);
+        let step5 = `Decrypted character: ${decryptedChar}`;
+        steps[i + 2].push(step5);
 
         plaintext += decryptedChar;
       } else {
