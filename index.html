@@ -155,10 +155,7 @@
                 readonly
               />
             </div>
-            <div class="form-group">
-              <label for="encryptionSteps">Encryption Steps</label>
-              <ul id="encryptionStepstext" class="steps-list"></ul>
-            </div>
+            
           </div>
           <div class="col-md-6">
             <div class="steps-table">
@@ -217,72 +214,138 @@
 
 
       // Encryption function
+      // function encrypt() {
+      //   let plaintext = document
+      //     .getElementById("encryptionInput")
+      //     .value.toUpperCase();
+      //   let key = parseInt(document.getElementById("encryptionKey").value);
+      //   let steps = [];
+      //   let ciphertext = "";
+
+      //   // Add the "All Alphabet Values" as the second column header
+      //   let alphabetValuesRow = [];
+      //   for (let i = 0; i < 26; i++) {
+      //     alphabetValuesRow.push(i);
+      //   }
+      //   steps.push(alphabetValuesRow);
+
+      //   // Add the alphabet index values
+      //   let alphabetIndexRow = [];
+      //   for (let i = 0; i < 26; i++) {
+      //     alphabetIndexRow.push(i);
+      //   }
+      //   steps.push(alphabetIndexRow);
+
+      //   for (let i = 0; i < plaintext.length; i++) {
+      //     let char = plaintext[i];
+      //     let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+
+      //     if (charCode >= 0 && charCode <= 25) {
+      //       // Step 1: Add key value to the character value
+      //       let step1 = char;
+      //       steps.push([step1]);
+
+      //       let plaintextvalue = charCode;
+      //       let step2 = plaintextvalue;
+      //       steps[i + 2].push(step2);
+
+      //       let keyAddingValue = charCode + key;
+      //       let step3 = keyAddingValue;
+      //       steps[i + 2].push(step3);
+
+      //       // Step 3: Apply modulo 26
+      //       let mod26Value = keyAddingValue % 26;
+      //       let step4 = mod26Value;
+      //       steps[i + 2].push(step4);
+
+      //       // Step 4: Convert back to letter
+      //       let encryptedCharCode = mod26Value + 65;
+      //       let encryptedChar = String.fromCharCode(encryptedCharCode);
+      //       let step5 = encryptedChar;
+      //       steps[i + 2].push(step5);
+
+      //       ciphertext += encryptedChar;
+      //     } else {
+      //       // Not a valid letter, keep as is
+      //       ciphertext += char;
+      //     }
+      //   }
+
+      //   // Display steps in the table
+      //   displaySteps(steps);
+
+      //   // Display ciphertext
+      //   document.getElementById("encryptedText").value = ciphertext;
+      // }
+
+     
+     
+
       function encrypt() {
-        let plaintext = document
-          .getElementById("encryptionInput")
-          .value.toUpperCase();
-        let key = parseInt(document.getElementById("encryptionKey").value);
-        let steps = [];
-        let ciphertext = "";
+    let plaintext = document
+      .getElementById("encryptionInput")
+      .value.toUpperCase();
+    let key = parseInt(document.getElementById("encryptionKey").value);
+    let steps = [];
+    let ciphertext = "";
+    let stepDescriptions = []; // Array to store step descriptions
 
-        // Add the "All Alphabet Values" as the second column header
-        let alphabetValuesRow = [];
-        for (let i = 0; i < 26; i++) {
-          alphabetValuesRow.push(i);
-        }
-        steps.push(alphabetValuesRow);
+    // Add the "All Alphabet Values" as the second column header
+    let alphabetValuesRow = [];
+    for (let i = 0; i < 26; i++) {
+      alphabetValuesRow.push(i);
+    }
+    steps.push(alphabetValuesRow);
 
-        // Add the alphabet index values
-        let alphabetIndexRow = [];
-        for (let i = 0; i < 26; i++) {
-          alphabetIndexRow.push(i);
-        }
-        steps.push(alphabetIndexRow);
+    // Add the alphabet index values
+    let alphabetIndexRow = [];
+    for (let i = 0; i < 26; i++) {
+      alphabetIndexRow.push(i);
+    }
+    steps.push(alphabetIndexRow);
 
-        for (let i = 0; i < plaintext.length; i++) {
-          let char = plaintext[i];
-          let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+    for (let i = 0; i < plaintext.length; i++) {
+      let char = plaintext[i];
+      let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
 
-          if (charCode >= 0 && charCode <= 25) {
-            // Step 1: Add key value to the character value
-            let step1 = char;
-            steps.push([step1]);
+      if (charCode >= 0 && charCode <= 25) {
+        // Step 1: Add key value to the character value
+        let step1 = `Add key (${key}) to plaintext value (${char})`;
+        steps.push([step1]);
 
-            let plaintextvalue = charCode;
-            let step2 = plaintextvalue;
-            steps[i + 2].push(step2);
+        let plaintextvalue = charCode;
+        let step2 = `Plaintext value: ${plaintextvalue}`;
+        steps[i + 2].push(step2);
 
-            let keyAddingValue = charCode + key;
-            let step3 = keyAddingValue;
-            steps[i + 2].push(step3);
+        let keyAddingValue = charCode + key;
+        let step3 = `Plaintext value (${plaintextvalue}) + Key (${key}) = ${keyAddingValue}`;
+        steps[i + 2].push(step3);
 
-            // Step 3: Apply modulo 26
-            let mod26Value = keyAddingValue % 26;
-            let step4 = mod26Value;
-            steps[i + 2].push(step4);
+        // Step 3: Apply modulo 26
+        let mod26Value = keyAddingValue % 26;
+        let step4 = `Modulo 26: ${keyAddingValue} % 26 = ${mod26Value}`;
+        steps[i + 2].push(step4);
 
-            // Step 4: Convert back to letter
-            let encryptedCharCode = mod26Value + 65;
-            let encryptedChar = String.fromCharCode(encryptedCharCode);
-            let step5 = encryptedChar;
-            steps[i + 2].push(step5);
+        // Step 4: Convert back to letter
+        let encryptedCharCode = mod26Value + 65;
+        let encryptedChar = String.fromCharCode(encryptedCharCode);
+        let step5 = `Encrypted character: ${encryptedChar}`;
+        steps[i + 2].push(step5);
 
-            ciphertext += encryptedChar;
-          } else {
-            // Not a valid letter, keep as is
-            ciphertext += char;
-          }
-        }
-
-        // Display steps in the table
-        displaySteps(steps);
-
-        // Display ciphertext
-        document.getElementById("encryptedText").value = ciphertext;
+        ciphertext += encryptedChar;
+      } else {
+        // Not a valid letter, keep as is
+        ciphertext += char;
       }
+    }
 
-     
-     
+    // Display steps in the table
+    displaySteps(steps);
+
+    // Display ciphertext
+    document.getElementById("encryptedText").value = ciphertext;
+  }
+
      
      
       function displaySteps(steps) {
