@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplicative Cipher</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="multiplicativeCipher.css" />
+  </head>
+  <body>
+    <div class="additviecipher">
+      <div class="cipher-section">
+        <h1 class="text-center ciphertitile">Multiplicative Cipher</h1>
+      </div>
+
+      <div class="container">
+        <h1 class="text-center mb-4">Alphabet Index</h1>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+              <!-- Generate alphabet items dynamically -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cipher-section">
+          <h2 class="text-center">Multiplicative Cipher</h2>
+          <div class="cipher-rules">
+            <p><strong>Encryption:</strong> (Plaintext * Key) mod 26</p>
+            <p>
+              <strong>Decryption:</strong> (Ciphertext * Modular Multiplicative
+              Inverse of Key) mod 26
+            </p>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <h3 class="text-center">Encryption</h3>
+              <div class="form-group">
+                <label for="multiplicativeInput">Plaintext</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="multiplicativeInput"
+                  placeholder="Enter plaintext"
+                />
+              </div>
+              <div class="form-group">
+                <label for="multiplicativeKey">Key</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="multiplicativeKey"
+                  placeholder="Enter key"
+                />
+              </div>
+              <button
+                type="button"
+                class="btn btn-primary btn-block"
+                onclick="multiplyEncrypt()"
+              >
+                Encrypt
+              </button>
+              <div class="form-group mt-3">
+                <label for="multiplicativeEncryptedText">Encrypted Text</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="multiplicativeEncryptedText"
+                  placeholder="Encrypted text"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+               
+                
+                <ul
+                  id="multiplicativeEncryptionStepstext"
+                  class="steps-list"
+                ></ul>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="steps-table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Plaintext</th>
+                      <th>Plaintext Alphabet Values</th>
+                      <th>Key Multiplying All Values</th>
+                      <th>Mod 26 Values</th>
+                      <th>Ciphertext</th>
+                    </tr>
+                  </thead>
+                  <tbody id="multiplicativeEncryptionTableBody">
+                    <!-- Multiplicative encryption steps table body -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="multiplicativeCipher.js"></script>
+  </body>
+</html>
