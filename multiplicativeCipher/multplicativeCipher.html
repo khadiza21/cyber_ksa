@@ -28,7 +28,7 @@
         </div>
 
         <div class="cipher-section">
-          <h2 class="text-center">Multiplicative Cipher</h2>
+          <h2 class="text-center">Multiplicative Encryption </h2>
           <div class="cipher-rules">
             <p><strong>Encryption:</strong> (Plaintext * Key) mod 26</p>
             <p>
@@ -73,20 +73,7 @@
                   readonly
                 />
               </div>
-              <div class="form-group">
-              
-                <div class="form-group mt-5">
-                    <h3>Visual Representation of Multiplicative Inverse Calculation:</h3>
-                    <table id="inverseCalculationTable" class="inverse-calculation-table">
-                        <!-- Table content will be dynamically added here -->
-                    </table>
-                </div>
-                
-                <ul
-                  id="multiplicativeEncryptionStepstext"
-                  class="steps-list"
-                ></ul>
-              </div>
+           
             </div>
             <div class="col-md-6">
               <div class="steps-table">
@@ -95,9 +82,9 @@
                     <tr>
                       <th>Plaintext</th>
                       <th>Plaintext Alphabet Values</th>
-                      <th>Key Multiplying All Values</th>
+                      <th>Key Values * Plaintext vlaue</th>
                       <th>Mod 26 Values</th>
-                      <th>Ciphertext</th>
+                      <th>Encrypted Ciphertext</th>
                     </tr>
                   </thead>
                   <tbody id="multiplicativeEncryptionTableBody">
@@ -166,13 +153,13 @@
                 <div class="col-md-6">
                     <div class="steps-table">
                         <table class="table">
-                            <thead>
+                            <thead> 
                                 <tr>
                                     <th>Ciphertext</th>
                                     <th>Ciphertext Alphabet Values</th>
-                                    <th>Key Inverse Multiplying All Values</th>
+                                    <th>Inverse key * Ciphertext Values</th>
                                     <th>Mod 26 Values</th>
-                                    <th>Plaintext</th>
+                                    <th>Decrypted Plaintext</th>
                                 </tr>
                             </thead>
                             <tbody id="multiplicativeDecryptionTableBody">

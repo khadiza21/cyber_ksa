@@ -64,25 +64,25 @@ function multiplyEncrypt() {
 
     if (charCode >= 0 && charCode <= 25) {
       // Step 1: Multiply key value with the character value
-      let step1 = `Multiply key (${key}) with plaintext value (${char})`;
+      let step1 = `${char}`;
       steps.push([step1]);
 
       let plaintextvalue = charCode;
-      let step2 = `Plaintext value: ${plaintextvalue}`;
+      let step2 = `${plaintextvalue}`;
       steps[i + 2].push(step2);
 
       let plaintextvaluemultiply = charCode * key;
-      let step3 = `key multiply  value: ${plaintextvaluemultiply}`;
+      let step3 = ` ${charCode} * ${key} = ${plaintextvaluemultiply}`;
       steps[i + 2].push(step3);
 
       let keyMultiplyingValue = (charCode * key) % 26;
-      let step4 = ` multiply value (${plaintextvaluemultiply}) * Key (${key}) mod 26 = ${keyMultiplyingValue}`;
+      let step4 = ` ${plaintextvaluemultiply} mod 26 = ${keyMultiplyingValue}`;
       steps[i + 2].push(step4);
 
       // Step 3: Convert back to letter
       let encryptedCharCode = keyMultiplyingValue + 65;
       let encryptedChar = String.fromCharCode(encryptedCharCode);
-      let step5 = `Encrypted character: ${encryptedChar}`;
+      let step5 = ` ${encryptedChar}`;
       steps[i + 2].push(step5);
 
       ciphertext += encryptedChar;
@@ -167,38 +167,39 @@ function multiplyDecrypt() {
 
     if (charCode >= 0 && charCode <= 25) {
       // Step 1: Multiply modular multiplicative inverse of key with the character value
-      let step1 = `For key (${key}) with ciphertext value (${char})`;
+      let step1 = `${char}`;
       steps.push([step1]);
 
       let ciphertextValue = charCode;
-      let step2 = `Ciphertext value: ${ciphertextValue}`;
+      let step2 = `${ciphertextValue}`;
       steps[i + 2].push(step2);
 
       let ciphertextValuemultifly = charCode * inverseKey;
-      let step3 = `Multiply value: ${ciphertextValuemultifly} where inverse key = ${inverseKey}`;
+      let step3 = `${inverseKey} * ${charCode} = ${ciphertextValuemultifly}`;
       steps[i + 2].push(step3);
-      //    (${inverseKey})
+    
+
       let keyInverseMultiplyingValue = (charCode * inverseKey) % 26;
-      let step4 = `Multiply value(${ciphertextValuemultifly})  mod 26 = ${keyInverseMultiplyingValue}`;
+      let step4 = `${ciphertextValuemultifly}  mod 26 = ${keyInverseMultiplyingValue}`;
       steps[i + 2].push(step4);
 
-      // Step 2: Convert back to letter
+     
       let decryptedCharCode = keyInverseMultiplyingValue + 65;
       let decryptedChar = String.fromCharCode(decryptedCharCode);
-      let step5 = `Decrypted character: ${decryptedChar}`;
+      let step5 = `${decryptedChar}`;
       steps[i + 2].push(step5);
 
       plaintext += decryptedChar;
     } else {
-      // Not a valid letter, keep as is
+   
       plaintext += char;
     }
   }
 
-  // Display steps in the table
+
   displayMultiplicativeDecryptionSteps(steps);
 
-  // Display plaintext
+ 
   document.getElementById("multiplicativeDecryptedText").value = plaintext;
 }
 
@@ -206,11 +207,11 @@ function displayMultiplicativeDecryptionSteps(steps) {
   let tableBody = document.getElementById("multiplicativeDecryptionTableBody");
   tableBody.innerHTML = "";
 
-  // Start iterating from the second row (excluding the index row)
+ 
   for (let i = 2; i < steps.length; i++) {
     let row = tableBody.insertRow();
 
-    // Insert ciphertext value
+    
     let ciphertextCell = row.insertCell();
     ciphertextCell.textContent = steps[i][0];
 

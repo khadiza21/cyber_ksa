@@ -54,16 +54,13 @@ function affineEncrypt() {
   for (let i = 0; i < plaintext.length; i++) {
     let char = plaintext[i];
     if (char === " ") {
-      // If character is a space, add it directly to the ciphertext
       ciphertext += " ";
-      // Push an empty array for the space step
       steps.push([]);
-      continue; // Skip the rest of the iteration for this character
+      continue; 
     }
-    let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+    let charCode = char.charCodeAt(0) - 65; 
 
     if (charCode >= 0 && charCode <= 25) {
-      // Step 1: Multiply keyA value with the character value and add keyB
       let step1 = `${char}`;
       steps.push([step1]);
 
@@ -83,7 +80,6 @@ function affineEncrypt() {
       let step5 = `${encryptionValuewithkey2} mod 26 = ${encryptionValue}`;
       steps[i + 2].push(step5);
 
-      // Step 2: Convert back to letter
       let encryptedCharCode = encryptionValue + 65;
       let encryptedChar = String.fromCharCode(encryptedCharCode);
       let step6 = ` ${encryptedChar}`;
@@ -91,15 +87,14 @@ function affineEncrypt() {
 
       ciphertext += encryptedChar;
     } else {
-      // Not a valid letter, keep as is
+  
       ciphertext += char;
     }
   }
 
-  // Display steps in the table
+
   displayAffineEncryptionSteps(steps);
 
-  // Display ciphertext
   document.getElementById("affineEncryptedText").value = ciphertext;
 }
 
@@ -145,15 +140,15 @@ function affineDecrypt() {
   let plaintext = "";
   let inverseKeyA = modInverse(keyA, 26);
 
-  // Add the "All Alphabet Values" as the second column header
   let alphabetValuesRow = [];
   for (let i = 0; i < 26; i++) {
     alphabetValuesRow.push(i);
   }
   steps.push(alphabetValuesRow);
 
-  // Add the alphabet index values
+
   let alphabetIndexRow = [];
+  
   for (let i = 0; i < 26; i++) {
     alphabetIndexRow.push(i);
   }
