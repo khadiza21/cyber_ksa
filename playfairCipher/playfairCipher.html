@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playfair Cipher Visual Encryption</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      .container {
+        margin-top: 50px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+      }
+      .green {
+        background-color: lightgreen;
+      }
+      .red {
+        background-color: salmon;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Playfair Cipher Visual Encryption</h2>
+      <div class="form-group">
+        <label for="keyword">Enter keyword:</label>
+        <input type="text" class="form-control" id="keyword" />
+      </div>
+      <div class="form-group">
+        <label for="message">Enter message:</label>
+        <input type="text" class="form-control" id="message" />
+      </div>
+      <button type="button" class="btn btn-primary" onclick="generateMatrix()">
+        Generate Visual Encryption
+      </button>
+      <div class="mt-3" id="matrixContainer"></div>
+    </div>
+
+    <script>
+      function formatMessage(message) {
+        let formattedMessage = [];
+        for (let i = 0; i < message.length; i += 2) {
+          let pair = [];
+          if (i + 1 < message.length && message[i] !== message[i + 1]) {
+            pair.push(message[i], message[i + 1]);
+          } else {
+            pair.push(message[i], "X");
+            i--;
+          }
+          formattedMessage.push(pair);
+        }
+        return formattedMessage;
+      }
+
+      function generatePlayfairMatrix(keyword) {
+        const keywordSet = new Set(
+          keyword
+            .toUpperCase()
+            .replace(/[^A-Z]/g, "")
+            .split("")
+        );
+        const alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
+
+        let key = [...keywordSet];
+        for (let i = 0; i < alphabet.length; i++) {
+          if (!key.includes(alphabet[i]) && alphabet[i] !== "J") {
+            key.push(alphabet[i]);
+          }
+        }
+
+        let matrix = [];
+        for (let i = 0; i < 5; i++) {
+          matrix.push([]);
+          for (let j = 0; j < 5; j++) {
+            matrix[i].push(key[i * 5 + j]);
+          }
+        }
+
+        return matrix;
+      }
+
+      function generatePairMatrix(pair, matrix) {
+        const charInMatrix = (char, matrix) =>
+          matrix.some((row) => row.includes(char));
+
+        if (
+          pair.length !== 2 ||
+          !charInMatrix(pair[0], matrix) ||
+          !charInMatrix(pair[1], matrix)
+        ) {
+          alert(`Invalid pair: ${pair}`);
+          return [];
+        }
+
+        const encryptedPair = encryptPair(pair, matrix);
+
+        const pairMatrix = [];
+        for (let i = 0; i < 5; i++) {
+          pairMatrix.push([]);
+          for (let j = 0; j < 5; j++) {
+            const cellContent = matrix[i][j];
+
+            if (cellContent === pair[0] || cellContent === pair[1]) {
+              pairMatrix[i].push(`<span class="green">${cellContent}</span>`);
+            } else {
+              pairMatrix[i].push(cellContent);
+            }
+
+
+           
+          }
+        }
+
+
+        
+        return pairMatrix;
+      }
+
+      function generateMatrix() {
+        const keyword = document
+          .getElementById("keyword")
+          .value.toUpperCase()
+          .replace(/[^A-Z]/g, "");
+        const message = document
+          .getElementById("message")
+          .value.toUpperCase()
+          .replace(/[^A-Z]/g, "");
+
+        if (keyword.length === 0 || message.length === 0) {
+          alert("Please enter both keyword and message.");
+          return;
+        }
+
+        const formattedMessage = formatMessage(message);
+        const matrix = generatePlayfairMatrix(keyword);
+
+        let outputHTML = "";
+
+        formattedMessage.forEach((pair) => {
+          const pairStr = pair.join("").toUpperCase(); // Join the pair array into a string
+          const pairMatrix = generatePairMatrix(pairStr, matrix);
+
+          let matrixTableHTML = `<p>Pair: ${pairStr}</p><table>`;
+          for (let i = 0; i < 5; i++) {
+            matrixTableHTML += "<tr>";
+            for (let j = 0; j < 5; j++) {
+              matrixTableHTML += `<td>${pairMatrix[i][j]}</td>`;
+            }
+            matrixTableHTML += "</tr>";
+          }
+          matrixTableHTML += "</table>";
+
+          outputHTML += matrixTableHTML;
+        });
+
+        let matrixTableHTML = "<p>Secret Key Matrix:</p><table>";
+        for (let i = 0; i < 5; i++) {
+          matrixTableHTML += "<tr>";
+          for (let j = 0; j < 5; j++) {
+            matrixTableHTML += `<td>${matrix[i][j]}</td>`;
+          }
+          matrixTableHTML += "</tr>";
+        }
+        matrixTableHTML += "</table>";
+
+        let formattedMessageHTML = "<p>Formatted Message:</p>";
+        formattedMessageHTML += "<p>";
+        formattedMessage.forEach((pair) => {
+          formattedMessageHTML += pair.join(" ");
+          formattedMessageHTML += " ";
+        });
+        formattedMessageHTML += "</p>";
+
+        document.getElementById("matrixContainer").innerHTML = `
+    ${matrixTableHTML}
+    <br>
+    ${formattedMessageHTML}
+    <br>
+    ${outputHTML}
+  `;
+      }
+  
+  function encryptPair(pair, matrix) {
+  let encryptedPair = [];
+  const [row1, col1] = findCharPosition(pair[0], matrix);
+  const [row2, col2] = findCharPosition(pair[1], matrix);
+
+  // Same row
+  if (row1 === row2) {
+    encryptedPair.push(matrix[row1][(col1 + 1) % 5]);
+    encryptedPair.push(matrix[row2][(col2 + 1) % 5]);
+  }
+  // Same column
+  else if (col1 === col2) {
+    encryptedPair.push(matrix[(row1 + 1) % 5][col1]);
+    encryptedPair.push(matrix[(row2 + 1) % 5][col2]);
+  }
+  // Rectangle
+  else {
+    encryptedPair.push(matrix[row1][col2]);
+    encryptedPair.push(matrix[row2][col1]);
+  }
+
+  return encryptedPair;
+}
+
+function findCharPosition(char, matrix) {
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      if (matrix[i][j] === char) {
+        return [i, j];
+      }
+    }
+  }
+  return [-1, -1]; // Character not found in matrix
+}
+  
+  
+  </script>
+  </body>
+</html>
