@@ -69,26 +69,26 @@ function encrypt() {
 
     if (charCode >= 0 && charCode <= 25) {
       // Step 1: Add key value to the character value
-      let step1 = `Add key (${key}) to plaintext value (${char})`;
+      let step1 = `${char}`;
       steps.push([step1]);
 
       let plaintextvalue = charCode;
-      let step2 = `Plaintext value: ${plaintextvalue}`;
+      let step2 = `${plaintextvalue}`;
       steps[i + 2].push(step2);
 
       let keyAddingValue = charCode + key;
-      let step3 = `Plaintext value (${plaintextvalue}) + Key (${key}) = ${keyAddingValue}`;
+      let step3 = ` ${plaintextvalue} +  ${key} = ${keyAddingValue}`;
       steps[i + 2].push(step3);
 
       // Step 3: Apply modulo 26
       let mod26Value = keyAddingValue % 26;
-      let step4 = `Modulo 26: ${keyAddingValue} % 26 = ${mod26Value}`;
+      let step4 = ` ${keyAddingValue} mod 26 = ${mod26Value}`;
       steps[i + 2].push(step4);
 
       // Step 4: Convert back to letter
       let encryptedCharCode = mod26Value + 65;
       let encryptedChar = String.fromCharCode(encryptedCharCode);
-      let step5 = `Encrypted character: ${encryptedChar}`;
+      let step5 = ` ${encryptedChar}`;
       steps[i + 2].push(step5);
 
       ciphertext += encryptedChar;
@@ -170,28 +170,28 @@ function decrypt() {
 
       if (charCode >= 0 && charCode <= 25) {
         // Step 1: Subtract key value from the character value
-        let step1 = `Subtract key (${key}) from ciphertext value (${char})`;
+        let step1 = `${char}`;
         steps.push([step1]);
 
         let ciphertextValue = charCode;
-        let step2 = `Ciphertext value: ${ciphertextValue}`;
+        let step2 = ` ${ciphertextValue}`;
         steps[i + 2].push(step2);
 
         
         let ciphertextValuesub = charCode-key;
-        let step3 = `key substructing value: ${ciphertextValue} -  Key (${key}) = ${ciphertextValuesub}`;
+        let step3 = ` ${ciphertextValue} - ${key} = ${ciphertextValuesub}`;
         steps[i + 2].push(step3);
 
 
 
         let keySubtractingValue = (charCode - key + 26) % 26; // Adding 26 to handle negative numbers
-        let step4 = `Ciphertext substruct value (${ciphertextValuesub}) mod 26  = ${keySubtractingValue}`;
+        let step4 = `${ciphertextValuesub} mod 26  = ${keySubtractingValue}`;
         steps[i + 2].push(step4);
 
         // Step 2: Convert back to letter
         let decryptedCharCode = keySubtractingValue + 65;
         let decryptedChar = String.fromCharCode(decryptedCharCode);
-        let step5 = `Decrypted character: ${decryptedChar}`;
+        let step5 = `${decryptedChar}`;
         steps[i + 2].push(step5);
 
         plaintext += decryptedChar;
