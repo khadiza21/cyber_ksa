@@ -128,3 +128,20 @@ tr:last-child td {
 .multiplicative-decryption-steps-table {
   margin-top: 20px;
 }
+
+.mt-5 {
+  margin-top: 2rem; /* Adjust margin-top as needed */
+}
+
+.form-group {
+  margin-bottom: 1rem; /* Adjust margin-bottom as needed */
+}
+
+#multiplicativeDecryptionStepstext {
+  list-style-type: none; /* Remove bullet points from the list */
+  padding: 0; /* Remove default padding */
+}
+
+#multiplicativeDecryptionStepstext li {
+  margin-bottom: 0.5rem; /* Adjust margin-bottom between each step */
+}

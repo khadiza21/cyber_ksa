@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affine Cipher</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="affinceCipher.css">
+</head>
+<body>
+    <div class="affine-cipher">
+        <div class="cipher-section">
+            <h1 class="text-center cipher-title">Affine Cipher</h1>
+        </div>
+
+        <div class="container">
+            <h1 class="text-center mb-4">Alphabet Index</h1>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <!-- Generate alphabet items dynamically -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cipher-section">
+                <h2 class="text-center">Affine Cipher Encryption</h2>
+                <div class="cipher-rules">
+                    <p><strong>Encryption:</strong> E(x) = (ax + b) mod 26</p>
+                    <p><strong>Decryption:</strong> D(x) = a<sup>-1</sup>(x - b) mod 26</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="text-center">Encryption</h3>
+                        <div class="form-group">
+                            <label for="affineInput">Plaintext</label>
+                            <input type="text" class="form-control" id="affineInput" placeholder="Enter plaintext">
+                        </div>
+                        <div class="form-group">
+                            <label for="affineKeyA">Key 'a' (Multiplicative)</label>
+                            <input type="number" class="form-control" id="affineKeyA" placeholder="Enter key a">
+                        </div>
+                        <div class="form-group">
+                            <label for="affineKeyB">Key 'b' (Additive)</label>
+                            <input type="number" class="form-control" id="affineKeyB" placeholder="Enter key b">
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block" onclick="affineEncrypt()">Encrypt</button>
+                        <div class="form-group mt-3">
+                            <label for="affineEncryptedText">Encrypted Text</label>
+                            <input type="text" class="form-control" id="affineEncryptedText" placeholder="Encrypted text" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="steps-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Plaintext</th>
+                                        <th>Plaintext Alphabet Values</th>
+                                        <th>Key Multiplying All Values</th>
+                                        <th>Key Adding Value</th>
+                                        <th>Mod 26 Values</th>
+                                        <th>Ciphertext</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="affineEncryptionTableBody">
+                                    <!-- Affine encryption steps table body -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cipher-section">
+                <h2 class="text-center">Affine Cipher Decryption</h2>
+                <div class="cipher-rules">
+                    <p><strong>Decryption:</strong> D(x) = a<sup>-1</sup>(x - b) mod 26</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="text-center">Decryption</h3>
+                        <div class="form-group">
+                            <label for="affineDecryptionInput">Ciphertext</label>
+                            <input type="text" class="form-control" id="affineDecryptionInput" placeholder="Enter ciphertext">
+                        </div>
+                        <div class="form-group">
+                            <label for="affineDecryptionKeyA">Key 'a' (Multiplicative)</label>
+                            <input type="number" class="form-control" id="affineDecryptionKeyA" placeholder="Enter key a">
+                        </div>
+                        <div class="form-group">
+                            <label for="affineDecryptionKeyB">Key 'b' (Additive)</label>
+                            <input type="number" class="form-control" id="affineDecryptionKeyB" placeholder="Enter key b">
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block" onclick="affineDecrypt()">Decrypt</button>
+                        <div class="form-group mt-3">
+                            <label for="affineDecryptedText">Decrypted Text</label>
+                            <input type="text" class="form-control" id="affineDecryptedText" placeholder="Decrypted text" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="steps-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Ciphertext</th>
+                                        <th>Ciphertext Alphabet Values</th>
+                                        <th>Key Inverse Multiplying All Values</th>
+                                        <th>Key Subtracting Value</th>
+                                        <th>Mod 26 Values</th>
+                                        <th>Plaintext</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="affineDecryptionTableBody">
+                                    <!-- Affine decryption steps table body -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="affineCipher.js"></script>
+</body>
+</html>
