@@ -129,4 +129,117 @@ function displayMultiplicativeEncryptionSteps(steps) {
       encryptedCell.textContent = steps[i][4];
     }
 }
-  
+
+
+function multiplyDecrypt() {
+    let ciphertext = document
+      .getElementById("multiplicativeDecryptionInput")
+      .value.toUpperCase();
+    let key = parseInt(document.getElementById("multiplicativeDecryptionKey").value);
+    let steps = [];
+    let plaintext = "";
+    let inverseKey = modInverse(key, 26); // Calculate the modular multiplicative inverse of the key
+console.log(inverseKey);
+    // Add the "All Alphabet Values" as the second column header
+    let alphabetValuesRow = [];
+    for (let i = 0; i < 26; i++) {
+      alphabetValuesRow.push(i);
+    }
+    steps.push(alphabetValuesRow);
+
+    // Add the alphabet index values
+    let alphabetIndexRow = [];
+    for (let i = 0; i < 26; i++) {
+      alphabetIndexRow.push(i);
+    }
+    steps.push(alphabetIndexRow);
+
+    for (let i = 0; i < ciphertext.length; i++) {
+      let char = ciphertext[i];
+      if (char === " ") {
+        // If character is a space, add it directly to the plaintext
+        plaintext += " ";
+        // Push an empty array for the space step
+        steps.push([]);
+        continue; // Skip the rest of the iteration for this character
+      }
+      let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+
+      if (charCode >= 0 && charCode <= 25) {
+        // Step 1: Multiply modular multiplicative inverse of key with the character value
+        let step1 = `For key (${key}) with ciphertext value (${char})`;
+        steps.push([step1]);
+
+        let ciphertextValue = charCode;
+        let step2 = `Ciphertext value: ${ciphertextValue}`;
+        steps[i + 2].push(step2);
+
+        let ciphertextValuemultifly = charCode * inverseKey;
+        let step3 = `Multiply value: ${ciphertextValuemultifly} where inverse key = ${inverseKey}`;
+        steps[i + 2].push(step3);
+    //    (${inverseKey})
+        let keyInverseMultiplyingValue = (charCode * inverseKey) % 26;
+        let step4 = `Multiply value(${ciphertextValuemultifly})  mod 26 = ${keyInverseMultiplyingValue}`;
+        steps[i + 2].push(step4);
+
+        // Step 2: Convert back to letter
+        let decryptedCharCode = keyInverseMultiplyingValue + 65;
+        let decryptedChar = String.fromCharCode(decryptedCharCode);
+        let step5 = `Decrypted character: ${decryptedChar}`;
+        steps[i + 2].push(step5);
+
+        plaintext += decryptedChar;
+      } else {
+        // Not a valid letter, keep as is
+        plaintext += char;
+      }
+    }
+
+    // Display steps in the table
+    displayMultiplicativeDecryptionSteps(steps);
+
+    // Display plaintext
+    document.getElementById("multiplicativeDecryptedText").value = plaintext;
+}
+
+function displayMultiplicativeDecryptionSteps(steps) {
+    let tableBody = document.getElementById("multiplicativeDecryptionTableBody");
+    tableBody.innerHTML = "";
+
+    // Start iterating from the second row (excluding the index row)
+    for (let i = 2; i < steps.length; i++) {
+      let row = tableBody.insertRow();
+
+      // Insert ciphertext value
+      let ciphertextCell = row.insertCell();
+      ciphertextCell.textContent = steps[i][0];
+
+      // Insert ciphertext value
+      let ciphertextCellCharValue = row.insertCell();
+      ciphertextCellCharValue.textContent = steps[i][1];
+
+      // Insert key inverse multiplying value
+      let keyInverseMultiplyingCell = row.insertCell();
+      keyInverseMultiplyingCell.textContent = steps[i][2];
+
+      // Insert modulo 26 value
+      let mod26Cell = row.insertCell();
+      mod26Cell.textContent = steps[i][3];
+
+      // Insert decrypted character
+      let decryptedCell = row.insertCell();
+      decryptedCell.textContent = steps[i][4];
+    }
+}
+
+// Function to calculate the modular multiplicative inverse
+function modInverse(a, m) {
+    // Validate if 'a' has a multiplicative inverse modulo 'm'
+    for (let x = 1; x < m; x++) {
+        if ((a * x) % m === 1) {
+            return x;
+        }
+    }
+    return NaN; // If 'a' doesn't have a multiplicative inverse modulo 'm'
+}
+
