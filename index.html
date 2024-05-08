@@ -166,7 +166,7 @@
                 <thead>
                   <tr>
                     <th>Plaintext</th>
-                    <th>All Alphabet Values</th>
+                    <!-- <th>Plaintext Alphabet Values</th> -->
                     <th>Key Adding All Values</th>
                     <th>Mod 26 Values</th>
                     <th>Ciphertext</th>
@@ -238,19 +238,6 @@
         }
         steps.push(alphabetIndexRow);
 
-        // Add the plaintext characters and their values
-        let plaintextRow = [];
-        for (let i = 0; i < plaintext.length; i++) {
-          let char = plaintext[i];
-          let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
-          if (charCode >= 0 && charCode <= 25) {
-            plaintextRow.push(charCode);
-          } else {
-            plaintextRow.push("");
-          }
-        }
-        steps.push(plaintextRow);
-
         for (let i = 0; i < plaintext.length; i++) {
           let char = plaintext[i];
           let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
@@ -262,18 +249,18 @@
 
             let keyAddingValue = charCode + key;
             let step2 = keyAddingValue;
-            steps[i + 3].push(step2);
+            steps[i + 2].push(step2);
 
             // Step 3: Apply modulo 26
             let mod26Value = keyAddingValue % 26;
             let step3 = mod26Value;
-            steps[i + 3].push(step3);
+            steps[i + 2].push(step3);
 
             // Step 4: Convert back to letter
             let encryptedCharCode = mod26Value + 65;
             let encryptedChar = String.fromCharCode(encryptedCharCode);
             let step4 = encryptedChar;
-            steps[i + 3].push(step4);
+            steps[i + 2].push(step4);
 
             ciphertext += encryptedChar;
           } else {
@@ -289,35 +276,31 @@
         document.getElementById("encryptedText").value = ciphertext;
       }
 
-     
+      function displaySteps(steps) {
+        let tableBody = document.getElementById("encryptionTableBody");
+        tableBody.innerHTML = "";
 
-function displaySteps(steps) {
-  let tableBody = document.getElementById("encryptionTableBody");
-  tableBody.innerHTML = "";
+        // Start iterating from the second row (excluding the index row)
+        for (let i = 2; i < steps.length; i++) {
+          let row = tableBody.insertRow();
 
-  // Start iterating from the second row (excluding the index row)
-  for (let i = 2; i < steps.length; i++) {
-    let row = tableBody.insertRow();
+          // Insert plaintext value
+          let plaintextCell = row.insertCell();
+          plaintextCell.textContent = steps[i][0];
 
-    // Insert plaintext value
-    let plaintextCell = row.insertCell();
-    plaintextCell.textContent = steps[i][0];
+          // Insert key adding value
+          let keyAddingCell = row.insertCell();
+          keyAddingCell.textContent = steps[i][1];
 
-    // Insert key adding value
-    let keyAddingCell = row.insertCell();
-    keyAddingCell.textContent = steps[i][1];
+          // Insert modulo 26 value
+          let mod26Cell = row.insertCell();
+          mod26Cell.textContent = steps[i][2];
 
-    // Insert modulo 26 value
-    let mod26Cell = row.insertCell();
-    mod26Cell.textContent = steps[i][2];
-
-    // Insert encrypted character
-    let encryptedCell = row.insertCell();
-    encryptedCell.textContent = steps[i][3];
-  }
-}
-
-    
+          // Insert encrypted character
+          let encryptedCell = row.insertCell();
+          encryptedCell.textContent = steps[i][3];
+        }
+      }
     </script>
   </body>
 </html>
