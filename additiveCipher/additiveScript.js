@@ -212,7 +212,7 @@ function displayDecryptionSteps(steps) {
     let tableBody = document.getElementById("decryptionTableBody");
     tableBody.innerHTML = "";
 
-    // Start iterating from the second row (excluding the index row)
+
     for (let i = 2; i < steps.length; i++) {
       let row = tableBody.insertRow();
 
