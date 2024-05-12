@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Function to generate alphabet items
+ 
   function generateAlphabet() {
     const tbody = document.querySelector("tbody");
     let index = 0;
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Call the function to generate alphabet items
+  
   generateAlphabet();
 });
 
@@ -36,8 +36,6 @@ function affineEncrypt() {
   let keyB = parseInt(document.getElementById("affineKeyB").value);
   let steps = [];
   let ciphertext = "";
-
-  // Add the "All Alphabet Values" as the second column header
   let alphabetValuesRow = [];
   for (let i = 0; i < 26; i++) {
     alphabetValuesRow.push(i);
@@ -102,7 +100,7 @@ function displayAffineEncryptionSteps(steps) {
   let tableBody = document.getElementById("affineEncryptionTableBody");
   tableBody.innerHTML = "";
 
-  // Start iterating from the second row (excluding the index row)
+
   for (let i = 2; i < steps.length; i++) {
     let row = tableBody.insertRow();
 
@@ -157,17 +155,16 @@ function affineDecrypt() {
   for (let i = 0; i < ciphertext.length; i++) {
     let char = ciphertext[i];
     if (char === " ") {
-      // If character is a space, add it directly to the plaintext
+      
       plaintext += " ";
-      // Push an empty array for the space step
+     
       steps.push([]);
-      continue; // Skip the rest of the iteration for this character
+      continue; 
     }
-    let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+    let charCode = char.charCodeAt(0) - 65; 
 
     if (charCode >= 0 && charCode <= 25) {
-      // Step 1: Apply decryption formula
-      // let step1 = `Decrypting (${char}) using formula D(x) = ${inverseKeyA}(x - ${keyB}) mod 26`;
+      
       let step1 = `${char}`;
       steps.push([step1]);
 
@@ -182,7 +179,7 @@ function affineDecrypt() {
       let decryptionValue1 = inverseKeyA * (ciphertextValue - keyB);
       let decryptionValue = inverseKeyA * (ciphertextValue - keyB);
       while (decryptionValue < 0) {
-        decryptionValue += 26; // Ensure the value is positive
+        decryptionValue += 26; 
       }
       decryptionValue %= 26;
 
@@ -200,7 +197,7 @@ function affineDecrypt() {
 
       plaintext += decryptedChar;
     } else {
-      // Not a valid letter, keep as is
+      
       plaintext += char;
     }
   }
@@ -216,7 +213,7 @@ function displayAffineDecryptionSteps(steps) {
   let tableBody = document.getElementById("affineDecryptionTableBody");
   tableBody.innerHTML = "";
 
-  // Start iterating from the second row (excluding the index row)
+ 
   for (let i = 2; i < steps.length; i++) {
     let row = tableBody.insertRow();
 
@@ -244,14 +241,13 @@ function displayAffineDecryptionSteps(steps) {
   }
 }
 
-// Function to calculate the modular multiplicative inverse
+
 function modInverse(a, m) {
-  // inverse_calculation.js
-  // Validate if 'a' has a multiplicative inverse modulo 'm'
+ 
   for (let x = 1; x < m; x++) {
     if ((a * x) % m === 1) {
       return x;
     }
   }
-  return NaN; // If 'a' doesn't have a multiplicative inverse modulo 'm'
+  return NaN;
 }

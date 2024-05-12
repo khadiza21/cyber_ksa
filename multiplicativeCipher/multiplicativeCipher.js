@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Function to generate alphabet items
+
   function generateAlphabet() {
     const tbody = document.querySelector("tbody");
     let index = 0;
@@ -26,9 +26,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Call the function to generate alphabet items
+
   generateAlphabet();
 });
+
+
+
 function multiplyEncrypt() {
   let plaintext = document
     .getElementById("multiplicativeInput")
@@ -37,7 +40,7 @@ function multiplyEncrypt() {
   let steps = [];
   let ciphertext = "";
 
-  // Add the "All Alphabet Values" as the second column header
+  // Add second column header
   let alphabetValuesRow = [];
   for (let i = 0; i < 26; i++) {
     alphabetValuesRow.push(i);
@@ -51,19 +54,21 @@ function multiplyEncrypt() {
   }
   steps.push(alphabetIndexRow);
 
+
+  
   for (let i = 0; i < plaintext.length; i++) {
     let char = plaintext[i];
     if (char === " ") {
-      // If character is a space, add it directly to the ciphertext
+     
       ciphertext += " ";
-      // Push an empty array for the space step
+    
       steps.push([]);
-      continue; // Skip the rest of the iteration for this character
+      continue; 
     }
-    let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+    let charCode = char.charCodeAt(0) - 65; // Convert letter to number
 
     if (charCode >= 0 && charCode <= 25) {
-      // Step 1: Multiply key value with the character value
+     
       let step1 = `${char}`;
       steps.push([step1]);
 
@@ -103,7 +108,7 @@ function displayMultiplicativeEncryptionSteps(steps) {
   let tableBody = document.getElementById("multiplicativeEncryptionTableBody");
   tableBody.innerHTML = "";
 
-  // Start iterating from the second row (excluding the index row)
+
   for (let i = 2; i < steps.length; i++) {
     let row = tableBody.insertRow();
 
@@ -138,9 +143,9 @@ function multiplyDecrypt() {
   );
   let steps = [];
   let plaintext = "";
-  let inverseKey = modInverse(key, 26); // Calculate the modular multiplicative inverse of the key
+  let inverseKey = modInverse(key, 26); 
   console.log(inverseKey);
-  // Add the "All Alphabet Values" as the second column header
+  // Add second column header
   let alphabetValuesRow = [];
   for (let i = 0; i < 26; i++) {
     alphabetValuesRow.push(i);
@@ -157,16 +162,16 @@ function multiplyDecrypt() {
   for (let i = 0; i < ciphertext.length; i++) {
     let char = ciphertext[i];
     if (char === " ") {
-      // If character is a space, add it directly to the plaintext
+     
       plaintext += " ";
-      // Push an empty array for the space step
+
       steps.push([]);
-      continue; // Skip the rest of the iteration for this character
+      continue; 
     }
-    let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+    let charCode = char.charCodeAt(0) - 65; 
 
     if (charCode >= 0 && charCode <= 25) {
-      // Step 1: Multiply modular multiplicative inverse of key with the character value
+     
       let step1 = `${char}`;
       steps.push([step1]);
 
@@ -233,14 +238,13 @@ function displayMultiplicativeDecryptionSteps(steps) {
   }
 }
 
-// Function to calculate the modular multiplicative inverse
 function modInverse(a, m) {
-  // inverse_calculation.js
-  // Validate if 'a' has a multiplicative inverse modulo 'm'
+ 
+
   for (let x = 1; x < m; x++) {
     if ((a * x) % m === 1) {
       return x;
     }
   }
-  return NaN; // If 'a' doesn't have a multiplicative inverse modulo 'm'
+  return NaN; 
 }

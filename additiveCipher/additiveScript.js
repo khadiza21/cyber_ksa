@@ -1,6 +1,6 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Function to generate alphabet items
+
   function generateAlphabet() {
     const tbody = document.querySelector("tbody");
     let index = 0;
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Call the function to generate alphabet items
+
   generateAlphabet();
 });
 
@@ -40,9 +40,9 @@ function encrypt() {
   let key = parseInt(document.getElementById("encryptionKey").value);
   let steps = [];
   let ciphertext = "";
-  let stepDescriptions = []; // Array to store step descriptions
+  let stepDescriptions = []; 
 
-  // Add the "All Alphabet Values" as the second column header
+  // Alphabet Values second column header
   let alphabetValuesRow = [];
   for (let i = 0; i < 26; i++) {
     alphabetValuesRow.push(i);
@@ -59,13 +59,13 @@ function encrypt() {
   for (let i = 0; i < plaintext.length; i++) {
     let char = plaintext[i];
     if (char === " ") {
-      // If character is a space, add it directly to the ciphertext
+    
       ciphertext += " ";
-      // Push an empty array for the space step
+    
       steps.push([]);
-      continue; // Skip the rest of the iteration for this character
+      continue; 
     }
-    let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+    let charCode = char.charCodeAt(0) - 65; 
 
     if (charCode >= 0 && charCode <= 25) {
       // Step 1: Add key value to the character value
@@ -109,7 +109,7 @@ function displaySteps(steps) {
   let tableBody = document.getElementById("encryptionTableBody");
   tableBody.innerHTML = "";
 
-  // Start iterating from the second row (excluding the index row)
+ 
   for (let i = 2; i < steps.length; i++) {
     let row = tableBody.insertRow();
 
@@ -143,14 +143,12 @@ function decrypt() {
     let steps = [];
     let plaintext = "";
 
-    // Add the "All Alphabet Values" as the second column header
     let alphabetValuesRow = [];
     for (let i = 0; i < 26; i++) {
       alphabetValuesRow.push(i);
     }
     steps.push(alphabetValuesRow);
 
-    // Add the alphabet index values
     let alphabetIndexRow = [];
     for (let i = 0; i < 26; i++) {
       alphabetIndexRow.push(i);
@@ -160,16 +158,16 @@ function decrypt() {
     for (let i = 0; i < ciphertext.length; i++) {
       let char = ciphertext[i];
       if (char === " ") {
-        // If character is a space, add it directly to the plaintext
+       
         plaintext += " ";
-        // Push an empty array for the space step
+      
         steps.push([]);
-        continue; // Skip the rest of the iteration for this character
+        continue; 
       }
-      let charCode = char.charCodeAt(0) - 65; // Convert letter to number value (A=0, B=1, ..., Z=25)
+      let charCode = char.charCodeAt(0) - 65; 
 
       if (charCode >= 0 && charCode <= 25) {
-        // Step 1: Subtract key value from the character value
+      
         let step1 = `${char}`;
         steps.push([step1]);
 
@@ -184,7 +182,7 @@ function decrypt() {
 
 
 
-        let keySubtractingValue = (charCode - key + 26) % 26; // Adding 26 to handle negative numbers
+        let keySubtractingValue = (charCode - key + 26) % 26; 
         let step4 = `${ciphertextValuesub} mod 26  = ${keySubtractingValue}`;
         steps[i + 2].push(step4);
 

@@ -70,6 +70,7 @@
       }
 
       function generatePlayfairMatrix(keyword) {
+        //removing non alphabetic char from key and all converted uppercase
         const keywordSet = new Set(
           keyword
             .toUpperCase()
@@ -97,9 +98,10 @@
       }
 
       function generatePairMatrix(pair, matrix) {
+        //chcek tha char are availbale in the matrix
         const charInMatrix = (char, matrix) =>
           matrix.some((row) => row.includes(char));
-
+        //if pair is even and have in matrix
         if (
           pair.length !== 2 ||
           !charInMatrix(pair[0], matrix) ||
@@ -122,14 +124,9 @@
             } else {
               pairMatrix[i].push(cellContent);
             }
-
-
-           
           }
         }
 
-
-        
         return pairMatrix;
       }
 
@@ -196,42 +193,7 @@
     ${outputHTML}
   `;
       }
-  
-  function encryptPair(pair, matrix) {
-  let encryptedPair = [];
-  const [row1, col1] = findCharPosition(pair[0], matrix);
-  const [row2, col2] = findCharPosition(pair[1], matrix);
 
-  // Same row
-  if (row1 === row2) {
-    encryptedPair.push(matrix[row1][(col1 + 1) % 5]);
-    encryptedPair.push(matrix[row2][(col2 + 1) % 5]);
-  }
-  // Same column
-  else if (col1 === col2) {
-    encryptedPair.push(matrix[(row1 + 1) % 5][col1]);
-    encryptedPair.push(matrix[(row2 + 1) % 5][col2]);
-  }
-  // Rectangle
-  else {
-    encryptedPair.push(matrix[row1][col2]);
-    encryptedPair.push(matrix[row2][col1]);
-  }
-
-  return encryptedPair;
-}
-
-function findCharPosition(char, matrix) {
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      if (matrix[i][j] === char) {
-        return [i, j];
-      }
-    }
-  }
-  return [-1, -1]; // Character not found in matrix
-}
-  
   
   </script>
   </body>
